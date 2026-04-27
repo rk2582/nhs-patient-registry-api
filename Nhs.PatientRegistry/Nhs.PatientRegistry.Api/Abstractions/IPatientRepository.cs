@@ -4,6 +4,6 @@ namespace Nhs.PatientRegistry.Api.Abstractions
 {
     public interface IPatientRepository
     {
-        Task<IReadOnlyCollection<Patient>> GetPatientsAsync();
+        Task<IEnumerable<Patient>> GetPatientsAsync();
     }
 }
