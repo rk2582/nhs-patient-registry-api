@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Nhs.PatientRegistry.Api/Nhs.PatientRegistry.Api.csproj" />
+  <Project Path="Nhs.PatientRegistry.Tests/Nhs.PatientRegistry.Tests.csproj" />
+</Solution>
