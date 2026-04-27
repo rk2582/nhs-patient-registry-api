@@ -1,6 +1,0 @@
-@Nhs.PatientRegistry.Api_HostAddress = http://localhost:5017
-
-GET {{Nhs.PatientRegistry.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
