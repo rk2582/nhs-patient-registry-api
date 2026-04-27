@@ -11,9 +11,24 @@ namespace Nhs.PatientRegistry.Api.Services
             _patientRepository = patientRepository;
         }
 
-        public Task<PatientDetailsDto?> GetPatientDetailsByIdAsync(int patientId)
+        public async Task<PatientDetailsDto?> GetPatientDetailsByIdAsync(int patientId)
         {
-            throw new NotImplementedException();
+            var patients = await _patientRepository.GetPatientsAsync();
+
+            var patient = patients.FirstOrDefault(p => p.Id == patientId);
+
+            if (patient is null)
+                return null;
+
+            return new PatientDetailsDto
+            {
+                Id = patient.Id,
+                NHSNumber = patient.NHSNumber,
+                Name = patient.Name,
+                DateOfBirth = patient.DateOfBirth,
+                GPPractice = patient.GPPractice,
+
+            };
         }
     }
 }
