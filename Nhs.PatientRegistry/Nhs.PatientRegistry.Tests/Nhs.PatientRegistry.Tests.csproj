@@ -22,8 +22,11 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Services\" />
     <Folder Include="NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nhs.PatientRegistry.Api\Nhs.PatientRegistry.Api.csproj" />
   </ItemGroup>
 
 </Project>

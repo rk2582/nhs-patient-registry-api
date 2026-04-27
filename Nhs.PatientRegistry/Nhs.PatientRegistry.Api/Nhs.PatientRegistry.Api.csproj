@@ -16,11 +16,7 @@
 	  <Folder Include="Controllers\" />
 	  <Folder Include="Mapping\" />
 	  <Folder Include="Middleware\" />
-	  <Folder Include="Models\" />
-	  <Folder Include="Services\" />
 	  <Folder Include="Validation\" />
-	  <Folder Include="DTOs\" />
-	  <Folder Include="Abstractions\" />
 	</ItemGroup>
 
 </Project>
