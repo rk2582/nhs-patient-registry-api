@@ -1,6 +1,10 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Nhs.PatientRegistry.Api.Abstractions;
+using Nhs.PatientRegistry.Api.Mapping;
 using Nhs.PatientRegistry.Api.Models;
 using Nhs.PatientRegistry.Api.Services;
 
@@ -10,11 +14,20 @@ namespace Nhs.PatientRegistry.Tests.Services
     {
         private readonly Mock<IPatientRepository> _patientRepositoryMock;
         private readonly PatientService _patientService;
-
+        private readonly Mock<ILogger<PatientService>> _loggerMock;
+        private readonly IMapper _mapper;
         public PatientServiceTests()
         {
             _patientRepositoryMock = new Mock<IPatientRepository>();
-            _patientService = new PatientService(_patientRepositoryMock.Object);
+            _loggerMock = new Mock<ILogger<PatientService>>();
+
+            var mapperConfiguration = new MapperConfiguration(configuration =>
+            {
+                configuration.AddProfile<PatientMappingProfile>();
+            }, NullLoggerFactory.Instance);
+            _mapper = mapperConfiguration.CreateMapper();
+
+            _patientService = new PatientService(_loggerMock.Object, _patientRepositoryMock.Object, _mapper);
         }
 
         [Fact]
