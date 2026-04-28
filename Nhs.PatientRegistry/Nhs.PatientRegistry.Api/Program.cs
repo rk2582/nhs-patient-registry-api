@@ -1,3 +1,8 @@
+using FluentValidation;
+using Nhs.PatientRegistry.Api.Abstractions;
+using Nhs.PatientRegistry.Api.Services;
+using Nhs.PatientRegistry.Api.Validation;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddSingleton<IPatientRepository, InMemoryPatientRepository>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+
+builder.Services.AddScoped<IValidator<int>, PatientIdValidator>();
 
 var app = builder.Build();
 

@@ -6,6 +6,7 @@ using Moq;
 using Nhs.PatientRegistry.Api.Controllers;
 using Nhs.PatientRegistry.Api.DTOs;
 using Nhs.PatientRegistry.Api.Services;
+using Nhs.PatientRegistry.Api.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,10 +22,11 @@ namespace Nhs.PatientRegistry.Tests.Controllers
 
         public PatientsControllerTests()
         {
+            _validator = new PatientIdValidator();
             _patientServiceMock = new Mock<IPatientService>();
             _loggerMock = new Mock<ILogger<PatientsController>>();
-
             _controller = new PatientsController(_patientServiceMock.Object, _validator, _loggerMock.Object);
+            
         }
 
         [Fact]
