@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Nhs.PatientRegistry.Api.DTOs;
 using Nhs.PatientRegistry.Api.Services;
 
 namespace Nhs.PatientRegistry.Api.Controllers
@@ -29,26 +30,31 @@ namespace Nhs.PatientRegistry.Api.Controllers
 
             if (!validationResult.IsValid)
             {
-                return BadRequest(new
+                _logger.LogWarning($"Invalid patient ID supplied: {id}");
+
+                return BadRequest(new ApiErrorResponse
                 {
-                    Message = "Invalid patient ID.",
-                    Errors = validationResult.Errors.Select(error => error.ErrorMessage)
+                    StatusCode = StatusCodes.Status400BadRequest,
+                    Message = "Patient ID must be a positive integer.",
+                    Detail = validationResult.Errors.FirstOrDefault()?.ErrorMessage
                 });
             }
 
-            var patientSummary = await _patientService.GetPatientDetailsByIdAsync(id);
+            var patientDetails = await _patientService.GetPatientDetailsByIdAsync(id);
 
-            if (patientSummary is null)
+            if (patientDetails is null)
             {
                 _logger.LogInformation("Patient with ID {PatientId} was not found.", id);
 
-                return NotFound(new
+                return NotFound(new ApiErrorResponse
                 {
-                    Message = $"Patient with ID {id} was not found."
+                    StatusCode = StatusCodes.Status404NotFound,
+                    Message = $"Patient with ID {id} was not found.",
+                    Detail = $"No patient record was found for ID {id}. Please check the ID and try again."
                 });
             }
 
-            return Ok(patientSummary);
+            return Ok(patientDetails);
         }
     }
 }
