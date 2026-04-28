@@ -23,9 +23,32 @@ namespace Nhs.PatientRegistry.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<IActionResult> GetPatientDetailsById(int id)
+        public async Task<IActionResult> GetPatientDetailsById(int id)
         {
-            throw new NotImplementedException();
+            var validationResult = await _patientIdValidator.ValidateAsync(id);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(new
+                {
+                    Message = "Invalid patient ID.",
+                    Errors = validationResult.Errors.Select(error => error.ErrorMessage)
+                });
+            }
+
+            var patientSummary = await _patientService.GetPatientDetailsByIdAsync(id);
+
+            if (patientSummary is null)
+            {
+                _logger.LogInformation("Patient with ID {PatientId} was not found.", id);
+
+                return NotFound(new
+                {
+                    Message = $"Patient with ID {id} was not found."
+                });
+            }
+
+            return Ok(patientSummary);
         }
     }
 }

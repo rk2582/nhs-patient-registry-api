@@ -15,7 +15,6 @@
 	<ItemGroup>
 	  <Folder Include="Mapping\" />
 	  <Folder Include="Middleware\" />
-	  <Folder Include="Validation\" />
 	</ItemGroup>
 
 </Project>
