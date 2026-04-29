@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using FluentValidation;
+using Microsoft.OpenApi;
 using Nhs.PatientRegistry.Api.Abstractions;
 using Nhs.PatientRegistry.Api.Mapping;
 using Nhs.PatientRegistry.Api.Services;
@@ -39,6 +40,16 @@ builder.Services.AddApiVersioning(options =>
        options.SubstituteApiVersionInUrl = true;
    });
 
+// --- API Documentation (Swagger) ---
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Patient Registry API",
+        Version = "v1",
+        Description = "API for retrieving patient summaries. ",
+    });
+});
 
 var app = builder.Build();
 
@@ -47,7 +58,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(x =>
+    {
+        x.SwaggerEndpoint("/swagger/v1/swagger.json", "Patient Registry API v1");
+    });
 }
 
 app.UseHttpsRedirection();
