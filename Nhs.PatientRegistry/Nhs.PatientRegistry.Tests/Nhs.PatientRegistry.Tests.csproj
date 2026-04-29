@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Nhs.PatientRegistry.Api\Nhs.PatientRegistry.Api.csproj" />
   </ItemGroup>
 

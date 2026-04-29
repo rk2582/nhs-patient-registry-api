@@ -4,9 +4,9 @@ using System.Text.Json;
 namespace Nhs.PatientRegistry.Api.Middleware
 {
     /// <summary>
-    /// Handles unexpected errors across the application.
-    /// It makes sure users see a clear and friendly error message
-    /// instead of technical error details.
+    /// A global safety net for errors.
+    /// It catches any crashes and sends a clean error message to the user 
+    /// instead of showing messy technical code.
     /// </summary>
     public class GlobalExceptionMiddleware
     {

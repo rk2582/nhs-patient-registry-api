@@ -1,9 +1,8 @@
-using Asp.Versioning;
 using FluentValidation;
-using Microsoft.OpenApi;
 using Nhs.PatientRegistry.Api.Abstractions;
 using Nhs.PatientRegistry.Api.Extensions;
 using Nhs.PatientRegistry.Api.Mapping;
+using Nhs.PatientRegistry.Api.Middleware;
 using Nhs.PatientRegistry.Api.Services;
 using Nhs.PatientRegistry.Api.Validation;
 
@@ -40,6 +39,8 @@ builder.Services.AddHealthCheckConfiguration();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

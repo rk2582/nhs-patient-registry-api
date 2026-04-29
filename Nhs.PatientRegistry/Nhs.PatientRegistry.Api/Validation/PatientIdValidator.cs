@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 namespace Nhs.PatientRegistry.Api.Validation
 {
+
     /// <summary>
     /// Checks if a Patient ID is valid.
     /// It ensures the number is 1 or higher.

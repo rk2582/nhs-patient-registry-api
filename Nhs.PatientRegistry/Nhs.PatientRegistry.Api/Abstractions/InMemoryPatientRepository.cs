@@ -2,8 +2,13 @@
 
 namespace Nhs.PatientRegistry.Api.Abstractions
 {
-    public class InMemoryPatientRepository :IPatientRepository
+    public class InMemoryPatientRepository : IPatientRepository
     {
+        private readonly ILogger<InMemoryPatientRepository> _logger;
+        public InMemoryPatientRepository(ILogger<InMemoryPatientRepository> logger)
+        {
+            _logger = logger;
+        }
         private static readonly Patient[] Patients =
                 {
                     new Patient
@@ -41,6 +46,7 @@ namespace Nhs.PatientRegistry.Api.Abstractions
                 };
         public async Task<IEnumerable<Patient>> GetPatientsAsync()
         {
+            _logger.LogInformation("Getting all patients from the In-Memory list.");
             return await Task.FromResult(Patients.AsEnumerable());
         }
     }

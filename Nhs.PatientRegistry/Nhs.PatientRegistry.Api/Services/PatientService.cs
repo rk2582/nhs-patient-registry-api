@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Nhs.PatientRegistry.Api.Abstractions;
 using Nhs.PatientRegistry.Api.DTOs;
-
 namespace Nhs.PatientRegistry.Api.Services
 {
+
     /// <summary>
     /// The main logic for handling patient information.
     /// </summary>
@@ -12,12 +12,14 @@ namespace Nhs.PatientRegistry.Api.Services
         private readonly IPatientRepository _patientRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<PatientService> _logger;
+
         public PatientService(ILogger<PatientService> logger, IPatientRepository patientRepository, IMapper mapper)
         {
-            _patientRepository = patientRepository;
             _logger = logger;
+            _patientRepository = patientRepository;
             _mapper = mapper;
         }
+
 
         /// <summary>
         /// Looks up a patient by their ID.
@@ -30,7 +32,6 @@ namespace Nhs.PatientRegistry.Api.Services
             var patients = await _patientRepository.GetPatientsAsync();
 
             var patient = patients.FirstOrDefault(p => p.Id == patientId);
-
             if (patient is null)
             {
                 _logger.LogWarning("Patient details not found for PatientId: {PatientId}", patientId);
@@ -38,6 +39,9 @@ namespace Nhs.PatientRegistry.Api.Services
             }
             _logger.LogInformation("Patient details found for PatientId: {PatientId}", patientId);
             return _mapper.Map<PatientDetailsDto>(patient);
+
         }
+
+
     }
 }
