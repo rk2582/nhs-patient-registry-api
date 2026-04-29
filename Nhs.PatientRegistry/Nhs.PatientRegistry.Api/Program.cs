@@ -2,6 +2,7 @@ using Asp.Versioning;
 using FluentValidation;
 using Microsoft.OpenApi;
 using Nhs.PatientRegistry.Api.Abstractions;
+using Nhs.PatientRegistry.Api.Extensions;
 using Nhs.PatientRegistry.Api.Mapping;
 using Nhs.PatientRegistry.Api.Services;
 using Nhs.PatientRegistry.Api.Validation;
@@ -27,29 +28,10 @@ builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IValidator<int>, PatientIdValidator>();
 
 //--- API Versioning Configuration ---
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ReportApiVersions = true;
-    options.ApiVersionReader = new UrlSegmentApiVersionReader();
-})
-   .AddApiExplorer(options =>
-   {
-       options.GroupNameFormat = "'v'VVV";
-       options.SubstituteApiVersionInUrl = true;
-   });
+builder.Services.AddApiVersioningConfiguration();
 
 // --- API Documentation (Swagger) ---
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Patient Registry API",
-        Version = "v1",
-        Description = "API for retrieving patient summaries. ",
-    });
-});
+builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();
 
