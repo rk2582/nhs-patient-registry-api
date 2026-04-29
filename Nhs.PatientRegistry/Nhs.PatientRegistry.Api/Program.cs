@@ -33,6 +33,10 @@ builder.Services.AddApiVersioningConfiguration();
 // --- API Documentation (Swagger) ---
 builder.Services.AddSwaggerConfiguration();
 
+//--Healthcheck Configuration --
+builder.Services.AddHealthCheckConfiguration();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,6 +49,18 @@ if (app.Environment.IsDevelopment())
         x.SwaggerEndpoint("/swagger/v1/swagger.json", "Patient Registry API v1");
     });
 }
+
+app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    ResponseWriter = (context, report) =>
+        context.Response.WriteAsJsonAsync(new
+        {
+            status = report.Status.ToString(),
+            service = "Nhs.PatientRegistry.Api",
+            timestamp = DateTime.UtcNow,
+            version = "1.0.0"
+        })
+});
 
 app.UseHttpsRedirection();
 

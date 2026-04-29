@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi;
 
 namespace Nhs.PatientRegistry.Api.Extensions
@@ -35,6 +36,16 @@ namespace Nhs.PatientRegistry.Api.Extensions
                     Description = "API for retrieving patient summaries. ",
                 });
             });
+            return services;
+        }
+
+        public static IServiceCollection AddHealthCheckConfiguration(this IServiceCollection services)
+        {
+
+            services.AddHealthChecks()
+                .AddCheck("Nhs.PatientRegistry.Api", () =>
+                    HealthCheckResult.Healthy("API is accepting requests"));
+
             return services;
         }
     }
