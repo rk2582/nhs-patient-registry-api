@@ -1,5 +1,6 @@
 using FluentValidation;
 using Nhs.PatientRegistry.Api.Abstractions;
+using Nhs.PatientRegistry.Api.Repositories;
 using Nhs.PatientRegistry.Api.Extensions;
 using Nhs.PatientRegistry.Api.Mapping;
 using Nhs.PatientRegistry.Api.Middleware;
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
 
 //Configure Automapper
 builder.Services.AddAutoMapper(configuration =>

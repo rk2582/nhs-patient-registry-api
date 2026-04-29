@@ -1,6 +1,7 @@
-﻿using Nhs.PatientRegistry.Api.Models;
+﻿using Nhs.PatientRegistry.Api.Abstractions;
+using Nhs.PatientRegistry.Api.Models;
 
-namespace Nhs.PatientRegistry.Api.Abstractions
+namespace Nhs.PatientRegistry.Api.Repositories
 {
     public class InMemoryPatientRepository : IPatientRepository
     {
@@ -14,40 +15,41 @@ namespace Nhs.PatientRegistry.Api.Abstractions
                     new Patient
                     {
                         Id = 1,
-                        NHSNumber = "1111111111",
-                        Name = "Lionel Messi",
+                        NHSNumber = "4857773456",
+                        Name = "John Smith",
                         DateOfBirth = new DateTime(1985, 4, 12),
                         GPPractice = "Delapre Medical Centre Northampton"
                     },
                     new Patient
                     {
                         Id = 2,
-                        NHSNumber = "2222222222",
-                        Name = "Cristiano Ronaldo",
+                        NHSNumber = "9434765919",
+                        Name = "Aisha Patel",
                         DateOfBirth = new DateTime(1992, 8, 25),
                         GPPractice = "Delapre Medical Centre Northampton"
                     },
                     new Patient
                     {
                         Id = 3,
-                        NHSNumber = "3333333333",
-                        Name = "Kylien Mbappe",
+                        NHSNumber = "4010232137",
+                        Name = "Emily Brown",
                         DateOfBirth = new DateTime(1978, 11, 3),
-                        GPPractice = "Delapre Medical Centre Northampton"
+                        GPPractice = "Abington Medical Centre Northampton"
                     },
                     new Patient
                     {
                         Id = 4,
-                        NHSNumber = "4444444444",
-                        Name = "Harry Kane",
+                        NHSNumber = "6215478930",
+                        Name = "David Wilson",
                         DateOfBirth = new DateTime(2001, 2, 18),
-                        GPPractice = "Delapre Medical Centre Northampton"
+                        GPPractice = "Kingsthorpe Medical Centre Northampton"
                     }
                 };
-        public async Task<IEnumerable<Patient>> GetPatientsAsync()
+        public async Task<Patient?> GetPatientByIdAsync(int patientId)
         {
-            _logger.LogInformation("Getting all patients from the In-Memory list.");
-            return await Task.FromResult(Patients.AsEnumerable());
+            _logger.LogInformation("Looking up patient in the In-Memory list. PatientId: {PatientId}", patientId);
+            var patient = Patients.FirstOrDefault(p => p.Id == patientId);
+            return await Task.FromResult(patient);
         }
     }
 }

@@ -29,9 +29,8 @@ namespace Nhs.PatientRegistry.Api.Services
         public async Task<PatientDetailsDto?> GetPatientDetailsByIdAsync(int patientId)
         {
             _logger.LogInformation("Getting patient details for PatientId: {PatientId}", patientId);
-            var patients = await _patientRepository.GetPatientsAsync();
-
-            var patient = patients.FirstOrDefault(p => p.Id == patientId);
+            var patient = await _patientRepository.GetPatientByIdAsync(patientId);
+           
             if (patient is null)
             {
                 _logger.LogWarning("Patient details not found for PatientId: {PatientId}", patientId);

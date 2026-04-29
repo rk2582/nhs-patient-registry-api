@@ -4,10 +4,11 @@ namespace Nhs.PatientRegistry.Api.Abstractions
 {
     public interface IPatientRepository
     {
-/// <summary>
-    /// Returns a list of patients that we can loop through.
-    /// Note: This is currently using In-Memory data.
-    /// </summary>
-        Task<IEnumerable<Patient>> GetPatientsAsync();
+        /// <summary>
+        /// Returns a patient by their unique patient ID.
+        /// </summary>
+        /// <param name="patientId">The patient's unique ID.</param>
+        /// <returns>The matching patient if found; otherwise null.</returns>
+        Task<Patient?> GetPatientByIdAsync(int patientId);
     }
 }

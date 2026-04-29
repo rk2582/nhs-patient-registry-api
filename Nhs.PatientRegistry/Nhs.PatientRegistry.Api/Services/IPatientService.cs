@@ -9,7 +9,7 @@ namespace Nhs.PatientRegistry.Api.Services
         /// <summary>
         /// Retrieves a patient details by id
         /// </summary>
-        /// <param name="id">The patient's unique ID.</param>
+        /// <param name="patientId">The patient's unique ID.</param>
         /// <returns>PatientDetailsDto</returns>
         Task<PatientDetailsDto?> GetPatientDetailsByIdAsync(int patientId);
     }

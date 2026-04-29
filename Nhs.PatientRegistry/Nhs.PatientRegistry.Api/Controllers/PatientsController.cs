@@ -25,7 +25,7 @@ namespace Nhs.PatientRegistry.Api.Controllers
 
 
         /// <summary>
-        /// Gets the patient details using the patient ID..
+        /// Gets the patient details using the patient ID.
         /// </summary>
         /// <param name="id">The patient ID.</param>
         /// <returns>The patient details if found.</returns>
@@ -39,7 +39,7 @@ namespace Nhs.PatientRegistry.Api.Controllers
             var validationResult = await _patientIdValidator.ValidateAsync(id);
             if (!validationResult.IsValid)
             {
-                _logger.LogWarning($"Invalid patient ID supplied: {id}");
+                _logger.LogWarning("Invalid patient ID supplied: {PatientId}", id);
 
                 return BadRequest(new ApiErrorResponse
                 {

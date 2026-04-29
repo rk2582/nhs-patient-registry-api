@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Nhs.PatientRegistry.Api.DTOs;
+using System.Net;
 using System.Text.Json;
 
 namespace Nhs.PatientRegistry.Api.Middleware
@@ -32,9 +33,11 @@ namespace Nhs.PatientRegistry.Api.Middleware
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
 
-                var response = new
+                var response = new ApiErrorResponse
                 {
-                    Message = "An unexpected error occurred. Please try again later."
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    Message = "An unexpected error occurred. Please try again later.",
+                    Detail = "Please contact support if the issue continues."
                 };
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));

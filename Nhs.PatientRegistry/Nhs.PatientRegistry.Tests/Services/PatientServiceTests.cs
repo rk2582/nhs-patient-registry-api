@@ -34,19 +34,17 @@ namespace Nhs.PatientRegistry.Tests.Services
         public async Task GetPatientDetailsByIdAsync_WhenPatientExists_ReturnsPatientDetails()
         {
             // arrange
-            var patients = new List<Patient>
-                {
-                    new Patient
-                        {
-                            Id = 1,
-                            NHSNumber = "9108286498",
-                            Name = "Rahul Kokkaranikkal",
-                            DateOfBirth = new DateTime(1982, 12, 25),
-                            GPPractice = "Delapre Medical Centre Northampton"
-                        }
-                };
+            var patient = new Patient
+            {
+                Id = 1,
+                NHSNumber = "9108286498",
+                Name = "Amelia Carter",
+                DateOfBirth = new DateTime(1982, 12, 25),
+                GPPractice = "Delapre Medical Centre Northampton"
+            };
 
-            _patientRepositoryMock.Setup(source => source.GetPatientsAsync()).ReturnsAsync(patients);
+            _patientRepositoryMock.Setup(source => source.GetPatientByIdAsync(1)).ReturnsAsync(patient);
+
 
             // act
             var result = await _patientService.GetPatientDetailsByIdAsync(1);
@@ -55,31 +53,19 @@ namespace Nhs.PatientRegistry.Tests.Services
             result.Should().NotBeNull();
             result!.Id.Should().Be(1);
             result.NHSNumber.Should().Be("9108286498");
-            result.Name.Should().Be("Rahul Kokkaranikkal");
+            result.Name.Should().Be("Amelia Carter");
             result.GPPractice.Should().Be("Delapre Medical Centre Northampton");
 
         }
 
         [Fact]
-        public async Task GetPatientDetailsByidAsync_WhenPatientDoesnotExist_ReturnsNull()
+        public async Task GetPatientDetailsByIdAsync_WhenPatientDoesNotExist_ReturnsNull()
         {
-            
-            var patients = new List<Patient>
-                {
-                    new Patient
-                    {
-                        Id = 25,
-                        NHSNumber = "9108286498",
-                        Name = "Rahul Kokkaranikkal",
-                        DateOfBirth = new DateTime(1982, 12, 25),
-                        GPPractice = "Delapre Medical Centre Northampton"
-                    }
-                };
 
-            _patientRepositoryMock.Setup(source => source.GetPatientsAsync()).ReturnsAsync(patients);
-           
-            var result = await _patientService.GetPatientDetailsByIdAsync(999);
-           
+            _patientRepositoryMock.Setup(source => source.GetPatientByIdAsync(255)).ReturnsAsync((Patient?)null);
+
+            var result = await _patientService.GetPatientDetailsByIdAsync(255);
+
             result.Should().BeNull();
         }
     }

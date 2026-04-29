@@ -36,8 +36,8 @@ namespace Nhs.PatientRegistry.Tests.Controllers
             var patientDetails = new PatientDetailsDto
             {
                 Id = 1,
-                NHSNumber = "1111111111",
-                Name = "Sachin Tendulker",
+                NHSNumber = "9108286498",
+                Name = "Michael Richard",
                 DateOfBirth = new DateTime(1985, 4, 12),
                 GPPractice = "Delapre Medical Centre Northampton",
             };
