@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using FluentValidation;
 using Nhs.PatientRegistry.Api.Abstractions;
 using Nhs.PatientRegistry.Api.Mapping;
@@ -23,6 +24,21 @@ builder.Services.AddSingleton<IPatientRepository, InMemoryPatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 
 builder.Services.AddScoped<IValidator<int>, PatientIdValidator>();
+
+//--- API Versioning Configuration ---
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+})
+   .AddApiExplorer(options =>
+   {
+       options.GroupNameFormat = "'v'VVV";
+       options.SubstituteApiVersionInUrl = true;
+   });
+
 
 var app = builder.Build();
 
