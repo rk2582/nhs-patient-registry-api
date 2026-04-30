@@ -1,11 +1,6 @@
-using FluentValidation;
-using Nhs.PatientRegistry.Api.Abstractions;
-using Nhs.PatientRegistry.Api.Repositories;
 using Nhs.PatientRegistry.Api.Extensions;
 using Nhs.PatientRegistry.Api.Mapping;
 using Nhs.PatientRegistry.Api.Middleware;
-using Nhs.PatientRegistry.Api.Services;
-using Nhs.PatientRegistry.Api.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,17 +10,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 
-//Configure Automapper
+// ---Configure Automapper ---
 builder.Services.AddAutoMapper(configuration =>
 {
     configuration.AddProfile<PatientMappingProfile>();
 });
 
-
-builder.Services.AddSingleton<IPatientRepository, InMemoryPatientRepository>();
-builder.Services.AddScoped<IPatientService, PatientService>();
-
-builder.Services.AddScoped<IValidator<int>, PatientIdValidator>();
+// --- Register Application Services, Repositories and Validators ---
+builder.Services.AddApplicationServices();
 
 //--- API Versioning Configuration ---
 builder.Services.AddApiVersioningConfiguration();
@@ -71,3 +63,5 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

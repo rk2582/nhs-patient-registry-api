@@ -61,11 +61,13 @@ namespace Nhs.PatientRegistry.Tests.Services
         [Fact]
         public async Task GetPatientDetailsByIdAsync_WhenPatientDoesNotExist_ReturnsNull()
         {
-
+            //arrange
             _patientRepositoryMock.Setup(source => source.GetPatientByIdAsync(255)).ReturnsAsync((Patient?)null);
 
+            //act
             var result = await _patientService.GetPatientDetailsByIdAsync(255);
 
+            //assert
             result.Should().BeNull();
         }
     }

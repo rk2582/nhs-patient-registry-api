@@ -50,7 +50,7 @@ namespace Nhs.PatientRegistry.Tests.Integration
             error.Message.Should().Be("Patient with ID 123 was not found.");
         }
         [Fact]
-        public async Task GetPatientById_WhenPatientIdIsInvalid_ReturnsBadRequest()
+        public async Task GetPatientById_WhenPatientIdIsNegative_ReturnsBadRequest()
         {
 
             //act
@@ -66,6 +66,23 @@ namespace Nhs.PatientRegistry.Tests.Integration
 
 
         }
+
+        [Fact]
+        public async Task GetPatientById_WhenPatientIdIsZero_ReturnsBadRequest()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/v1/patients/0");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+            var apiError = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+            apiError.Should().NotBeNull();
+            apiError!.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            apiError.Message.Should().Be("Patient ID must be a positive integer.");
+        }
+
+
     }
 
 }

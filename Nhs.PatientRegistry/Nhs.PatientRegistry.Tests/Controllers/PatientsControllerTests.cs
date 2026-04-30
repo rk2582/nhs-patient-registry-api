@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Nhs.PatientRegistry.Api.Abstractions;
 using Nhs.PatientRegistry.Api.Controllers;
 using Nhs.PatientRegistry.Api.DTOs;
-using Nhs.PatientRegistry.Api.Services;
 using Nhs.PatientRegistry.Api.Validation;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Nhs.PatientRegistry.Tests.Controllers
                 Id = 1,
                 NHSNumber = "9108286498",
                 Name = "Michael Richard",
-                DateOfBirth = new DateTime(1985, 4, 12),
+                DateOfBirth = new DateOnly(1985, 4, 12),
                 GPPractice = "Delapre Medical Centre Northampton",
             };
 
@@ -73,6 +74,19 @@ namespace Nhs.PatientRegistry.Tests.Controllers
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
+        }
+
+        [Fact]
+        public async Task GetPatientDetails_WhenPatientIdIsNegative_ReturnsBadRequestWithCorrectBody()
+        {
+            // Act
+            var result = await _controller.GetPatientDetailsById(-1);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            var errorResponse = Assert.IsType<ApiErrorResponse>(badRequestResult.Value);
+            Assert.Equal(StatusCodes.Status400BadRequest, errorResponse.StatusCode);
+            Assert.Equal("Patient ID must be a positive integer.", errorResponse.Message);
         }
 
     }

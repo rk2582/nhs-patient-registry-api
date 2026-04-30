@@ -1,8 +1,8 @@
 ﻿using Asp.Versioning;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Nhs.PatientRegistry.Api.Abstractions;
 using Nhs.PatientRegistry.Api.DTOs;
-using Nhs.PatientRegistry.Api.Services;
 
 namespace Nhs.PatientRegistry.Api.Controllers
 {

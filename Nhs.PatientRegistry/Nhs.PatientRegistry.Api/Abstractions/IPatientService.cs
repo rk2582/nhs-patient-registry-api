@@ -1,6 +1,6 @@
 ﻿using Nhs.PatientRegistry.Api.DTOs;
 
-namespace Nhs.PatientRegistry.Api.Services
+namespace Nhs.PatientRegistry.Api.Abstractions
 {
     
     public interface IPatientService

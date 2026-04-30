@@ -1,11 +1,24 @@
 ﻿using Asp.Versioning;
+using FluentValidation;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi;
+using Nhs.PatientRegistry.Api.Abstractions;
+using Nhs.PatientRegistry.Api.Repositories;
+using Nhs.PatientRegistry.Api.Services;
+using Nhs.PatientRegistry.Api.Validation;
 
 namespace Nhs.PatientRegistry.Api.Extensions
 {
     public static class ServiceExtensions
     {
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IPatientRepository, InMemoryPatientRepository>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IValidator<int>, PatientIdValidator>();
+            return services;
+        }
         public static IServiceCollection AddApiVersioningConfiguration(this IServiceCollection services)
         {
             services.AddApiVersioning(options =>

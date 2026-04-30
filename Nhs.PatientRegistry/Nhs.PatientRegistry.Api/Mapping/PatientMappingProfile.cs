@@ -8,7 +8,9 @@ namespace Nhs.PatientRegistry.Api.Mapping
     {
         public PatientMappingProfile()
         {
-            CreateMap<Patient, PatientDetailsDto>();
+            CreateMap<Patient, PatientDetailsDto>()
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.DateOfBirth)));
+            ;
         }
     }
 }
